@@ -3,6 +3,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 
 const isRecordingSupported =
@@ -33,21 +34,27 @@ export function CreateAudio() {
   }
 
   async function uploadAudio(audio: Blob) {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
+      formData.append('file', audio, 'audio.webm');
 
-    formData.append('file', audio, 'audio.webm');
+      const response = await fetch(
+        `http://localhost:3333/rooms/${params.roomId}/audio`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
-    const response = await fetch(
-      `http://localhost:3333/rooms/${params.roomId}/audio`,
-      {
-        method: 'POST',
-        body: formData,
+      if (!response.ok) {
+        throw new Error('Erro ao enviar o áudio');
       }
-    );
 
-    const result = await response.json();
-
-    console.log(result);
+      toast.success('Áudio gravado e enviado com sucesso!');
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao enviar o áudio.');
+    }
   }
 
   function createRecorder(audio: MediaStream) {

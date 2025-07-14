@@ -50,8 +50,9 @@ export function CreateRoomForm() {
       <CardHeader>
         <CardTitle>Criar sala</CardTitle>
         <CardDescription>
-          Crie uam nova sala para começar a fazer perguntas e receber respostas
-          da I.A.
+          Crie uma nova sala, grave um áudio e deixe disponível para que outras
+          pessoas façam perguntas. A inteligência artificial usará o seu áudio
+          como base para responder.
         </CardDescription>
       </CardHeader>
       <CardContent>
