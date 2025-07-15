@@ -5,65 +5,54 @@ import { Card, CardContent } from '@/components/ui/card';
 
 export function Home() {
   return (
-    <section className="flex h-screen flex-col items-center justify-center gap-8 px-8">
+    <section className="flex h-screen flex-col items-center justify-center gap-8 px-8 pt-40 pb-8">
       <h1 className="mb-4 font-bold text-4xl">Bem-vindo ao Live Companion</h1>
       <p className="mb-6 w-100 text-center text-lg text-muted-foreground">
-        Onde seus viewers nunca ficam com dúvidas. Crie uma sala, grave seu
-        conteúdo e deixe a IA responder perguntas automaticamente para o seu
-        público.
+        Crie uma sala, grave seu conteúdo e deixe a IA responder perguntas
+        automaticamente para o seu público.
       </p>
       <Link to={'/create-room'}>
-        <Button className="text-3x1">Começar</Button>
+        <Button className="text-2xl text-black shadow-[0_6px_20px_rgba(0,0,0,0.6)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+          Iniciar
+        </Button>
       </Link>
-      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="my-12 grid h-full grid-cols-1 gap-6 md:grid-cols-3">
         <Card>
           <CardContent className="flex flex-col items-center">
             <Group height={75} width={75} />
-            <h3 className="mb-2 font-semibold text-xl">
+            <h3 className="my-5 font-semibold text-xl">
               Crie salas personalizadas
             </h3>
-            <p className="text-muted-foreground">
-              Configure salas exclusivas para seus eventos, cursos ou
-              transmissões.
+            <p className="text-center text-muted-foreground">
+              Monte salas exclusivas para suas lives, cursos ou eventos. Ofereça
+              uma experiência única e interativa para o seu público, tudo de
+              forma simples e rápida.
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex flex-col items-center">
             <Mic height={75} width={75} />
-            <h3 className="mb-2 font-semibold text-xl">Grave seu conteúdo</h3>
-            <p className="text-muted-foreground">
-              Deixe sua mensagem registrada para que a IA possa usar como base
-              ao responder.
+            <h3 className="my-5 font-semibold text-xl">Grave seu conteúdo</h3>
+            <p className="text-center text-muted-foreground">
+              Grave suas ideias, aulas, workshops ou até mesmo crie seu próprio
+              audiobook. Tenha seu conteúdo sempre disponível para consultas.
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex flex-col items-center">
             <Bot height={75} width={75} />
-            <h3 className="mb-2 font-semibold text-xl">
+            <h3 className="my-5 font-semibold text-xl">
               IA que responde por você
             </h3>
-            <p className="text-muted-foreground">
-              Seus viewers fazem perguntas e a IA responde com base no seu
-              áudio, garantindo interação e engajamento.
+            <p className="text-center text-muted-foreground">
+              Economize tempo enquanto a IA cuida das perguntas do seu público.
+              Continue apresentando sem interrupções, sabendo que as dúvidas
+              estão sendo respondidas com base no que você falou.
             </p>
           </CardContent>
         </Card>
-      </div>
-      <div className="mt-16 text-center">
-        <h2 className="mb-4 font-bold text-3xl">
-          Pronto para transformar a experiência dos seus viewers?
-        </h2>
-        <p className="mb-6 text-muted-foreground">
-          Comece agora mesmo e deixe a IA cuidar das dúvidas do seu público.
-        </p>
-        <Link
-          className="rounded-sm bg-primary px-4 text-primary-foreground shadow-xs hover:bg-primary/90"
-          to={'/create-room'}
-        >
-          Começar
-        </Link>
       </div>
     </section>
   );
