@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noConsole: <explanation> */
+/** biome-ignore-all lint/suspicious/noConsole: <explanation> testes para audio */
 
 import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
