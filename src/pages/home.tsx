@@ -6,6 +6,15 @@ import { Card, CardContent } from '@/components/ui/card';
 export function Home() {
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-8 px-8 pt-40 pb-8">
+      <button
+        className="rounded bg-gray-200 p-2 text-black dark:bg-gray-800 dark:text-white"
+        onClick={() => {
+          document.documentElement.classList.toggle('dark');
+        }}
+        type="button"
+      >
+        Toggle theme
+      </button>
       <h1 className="mb-4 font-bold text-4xl">Bem-vindo ao Live Companion</h1>
       <p className="mb-6 w-100 text-center text-lg text-muted-foreground">
         Crie uma sala, grave seu conteúdo e deixe a IA responder perguntas
