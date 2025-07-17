@@ -119,3 +119,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  @keyframes line-pulse {
+    0%,
+    100% {
+      transform: scaleY(0.5);
+    }
+    50% {
+      transform: scaleY(1.2);
+    }
+  }
+
+  .animate-line-pulse {
+    animation: line-pulse 1.2s ease-in-out infinite;
+    transform-origin: bottom;
+  }
+}

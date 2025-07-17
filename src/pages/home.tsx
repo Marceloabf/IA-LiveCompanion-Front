@@ -1,19 +1,25 @@
-import { Bot, Group, Mic } from 'lucide-react';
+import { Bot, Group, Mic, MoonStar, Sun } from 'lucide-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function Home() {
+  const [isDark, setIsDark] = useState(
+    document.documentElement.classList.contains('dark')
+  );
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-8 px-8 pt-40 pb-8">
       <button
-        className="rounded bg-gray-200 p-2 text-black dark:bg-gray-800 dark:text-white"
+        aria-label="Alternar tema"
+        className="cursor-pointer rounded bg-gray-200 p-2 text-black dark:bg-gray-800 dark:text-white"
         onClick={() => {
           document.documentElement.classList.toggle('dark');
+          setIsDark(!isDark);
         }}
         type="button"
       >
-        Toggle theme
+        {isDark ? <MoonStar /> : <Sun />}
       </button>
       <h1 className="mb-4 font-bold text-4xl">Bem-vindo ao Live Companion</h1>
       <p className="mb-6 w-100 text-center text-lg text-muted-foreground">
@@ -21,12 +27,10 @@ export function Home() {
         automaticamente para o seu público.
       </p>
       <Link to={'/create-room'}>
-        <Button className="text-2xl text-black shadow-[0_6px_20px_rgba(0,0,0,0.6)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-          Iniciar
-        </Button>
+        <Button className="text-2xl">{'Iniciar'}</Button>
       </Link>
       <div className="my-12 grid h-full grid-cols-1 gap-6 md:grid-cols-3">
-        <Card>
+        <Card className="transition-transform duration-300 hover:scale-105">
           <CardContent className="flex flex-col items-center">
             <Group height={75} width={75} />
             <h3 className="my-5 font-semibold text-xl">
@@ -39,7 +43,7 @@ export function Home() {
             </p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-transform duration-300 hover:scale-105">
           <CardContent className="flex flex-col items-center">
             <Mic height={75} width={75} />
             <h3 className="my-5 font-semibold text-xl">Grave seu conteúdo</h3>
@@ -49,7 +53,7 @@ export function Home() {
             </p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="transition-transform duration-300 hover:scale-105">
           <CardContent className="flex flex-col items-center">
             <Bot height={75} width={75} />
             <h3 className="my-5 font-semibold text-xl">
