@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { RecordingVisualizer } from '@/components/ui/recording-visualizer';
 
 const isRecordingSupported =
   !!navigator.mediaDevices &&
@@ -20,9 +21,17 @@ export function CreateAudio() {
   const [isRecording, setIsRecording] = useState(false);
   const recorder = useRef<MediaRecorder | null>(null);
   const intervalRef = useRef<NodeJS.Timeout>(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [hasShownSuccess, setHasShownSuccess] = useState(false);
 
   function stopRecording() {
     setIsRecording(false);
+
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
 
     if (recorder.current && recorder.current.state !== 'inactive') {
       recorder.current.stop();
@@ -31,6 +40,12 @@ export function CreateAudio() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
+  }
+
+  function formatTime(seconds: number) {
+    const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const sec = String(seconds % 60).padStart(2, '0');
+    return `${min}:${sec}`;
   }
 
   async function uploadAudio(audio: Blob) {
@@ -50,7 +65,10 @@ export function CreateAudio() {
         throw new Error('Erro ao enviar o áudio');
       }
 
-      toast.success('Áudio gravado e enviado com sucesso!');
+      if (!hasShownSuccess) {
+        toast.success('Áudio enviado com sucesso!');
+        setHasShownSuccess(true);
+      }
     } catch (error) {
       console.error(error);
       toast.error('Erro ao enviar o áudio.');
@@ -87,6 +105,11 @@ export function CreateAudio() {
     }
 
     setIsRecording(true);
+    setElapsedTime(0);
+
+    timerRef.current = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
 
     const audio = await navigator.mediaDevices.getUserMedia({
       audio: {
@@ -103,6 +126,8 @@ export function CreateAudio() {
 
       createRecorder(audio);
     }, 5000);
+
+    setHasShownSuccess(false);
   }
 
   if (!params.roomId) {
@@ -116,7 +141,8 @@ export function CreateAudio() {
       ) : (
         <Button onClick={startRecording}>Gravar áudio</Button>
       )}
-      {isRecording ? <p>Gravando...</p> : <p>Pausado</p>}
+      {isRecording ? <RecordingVisualizer /> : <p>Pausado</p>}
+      <p className="text-green-500 text-lg">{formatTime(elapsedTime)}</p>
       <Link className="flex gap-2 align-middle" to={`/room/${params.roomId}`}>
         <ArrowLeft /> Retornar
       </Link>
