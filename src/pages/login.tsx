@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/suspicious/noConsole: <explanation> testes de forms */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -31,6 +30,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = (values: LoginSchema) => {
+    // biome-ignore lint/suspicious/noConsole: <api test>
     console.log('Login:', values);
     // Chamada da API de login
   };
