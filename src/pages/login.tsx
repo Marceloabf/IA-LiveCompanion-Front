@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,6 +22,8 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -29,10 +32,21 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (values: LoginSchema) => {
-    // biome-ignore lint/suspicious/noConsole: <api test>
-    console.log('Login:', values);
-    // Chamada da API de login
+  const onSubmit = async (values: LoginSchema) => {
+    setIsLoading(true);
+    const response = await fetch('http://localhost:3333/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      navigate('/', { state: { token: data.token, name: data.name } });
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -73,7 +87,7 @@ export default function LoginForm() {
               />
 
               <Button className="w-full" type="submit">
-                Entrar
+                {isLoading ? 'Entrando...' : 'Entrar'}
               </Button>
               <p className="mt-4 text-center text-muted-foreground text-sm">
                 Não tem uma conta?{' '}

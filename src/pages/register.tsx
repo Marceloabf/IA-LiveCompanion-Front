@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,6 +32,8 @@ const registerSchema = z.object({
 type RegisterSchema = z.infer<typeof registerSchema>;
 
 export default function RegisterForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -42,10 +45,21 @@ export default function RegisterForm() {
     },
   });
 
-  const onSubmit = (values: RegisterSchema) => {
-    // biome-ignore lint/suspicious/noConsole: <test api>
-    console.log('Register:', values);
-    // Chamada da API de register
+  const onSubmit = async (values: RegisterSchema) => {
+    setIsLoading(true);
+    const response = await fetch('http://localhost:3333/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      navigate('/', { state: { userId: data.userId, name: values.name } });
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -136,7 +150,7 @@ export default function RegisterForm() {
               />
 
               <Button className="w-full" type="submit">
-                Registrar
+                {isLoading ? 'Registrando..' : 'Registrar'}
               </Button>
 
               <p className="mt-4 text-center text-muted-foreground text-sm">
