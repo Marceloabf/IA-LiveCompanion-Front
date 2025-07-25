@@ -1,13 +1,15 @@
 import { Bot, Group, Mic, MoonStar, Sun } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function Home() {
+  const location = useLocation();
   const [isDark, setIsDark] = useState(
     document.documentElement.classList.contains('dark')
   );
+
   return (
     <section className="flex h-screen flex-col items-center justify-center gap-8 px-8 pt-40 pb-8">
       <button
@@ -21,7 +23,9 @@ export function Home() {
       >
         {isDark ? <MoonStar /> : <Sun />}
       </button>
-      <h1 className="mb-4 font-bold text-4xl">Bem-vindo ao Live Companion</h1>
+      <h1 className="mb-4 font-bold text-4xl">
+        Bem-vindo! {location?.state.name.split(' ')[0] ?? ''}
+      </h1>
       <p className="mb-6 w-100 text-center text-lg text-muted-foreground">
         Crie uma sala, grave seu conteúdo e deixe a IA responder perguntas
         automaticamente para o seu público.
