@@ -1,11 +1,10 @@
 import { Bot, Group, Mic, MoonStar, Sun } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function Home() {
-  const location = useLocation();
   const [isDark, setIsDark] = useState(
     document.documentElement.classList.contains('dark')
   );
@@ -23,14 +22,12 @@ export function Home() {
       >
         {isDark ? <MoonStar /> : <Sun />}
       </button>
-      <h1 className="mb-4 font-bold text-4xl">
-        Bem-vindo! {location?.state.name.split(' ')[0] ?? ''}
-      </h1>
+      <h1 className="mb-4 font-bold text-4xl">Bem-vindo!</h1>
       <p className="mb-6 w-100 text-center text-lg text-muted-foreground">
         Crie uma sala, grave seu conteúdo e deixe a IA responder perguntas
         automaticamente para o seu público.
       </p>
-      <Link to={'/create-room'}>
+      <Link to={'/login'}>
         <Button className="text-2xl">{'Iniciar'}</Button>
       </Link>
       <div className="my-12 grid h-full grid-cols-1 gap-6 md:grid-cols-3">
