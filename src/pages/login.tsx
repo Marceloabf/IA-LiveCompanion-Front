@@ -19,6 +19,13 @@ const loginSchema = z.object({
   password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres'),
 });
 
+interface loginResponse {
+  userId: string;
+  name: string;
+  role: string;
+  token: string;
+}
+
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
@@ -42,9 +49,11 @@ export default function LoginForm() {
       body: JSON.stringify(values),
     });
 
-    const data = await response.json();
+    const data: loginResponse = await response.json();
     if (response.ok) {
-      navigate('/', { state: { token: data.token, name: data.name } });
+      navigate('/create-room', {
+        state: { token: data.token, name: data.name, userId: data.userId },
+      });
     }
     setIsLoading(false);
   };

@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
+import type { sharedState } from '@/http/types/shared-state';
 import { useCreateRoom } from '@/http/use-create-room';
 import { Button } from './ui/button';
 import {
@@ -24,11 +25,12 @@ import { Textarea } from './ui/textarea';
 const createRoomSchema = z.object({
   name: z.string().min(3, { message: 'Inclua no mínimo 3 caracteres' }),
   description: z.string(),
+  userId: z.uuid(),
 });
 
 type CreateRoomFormData = z.infer<typeof createRoomSchema>;
 
-export function CreateRoomForm() {
+export function CreateRoomForm({ userId }: sharedState) {
   const { mutateAsync: createRoom } = useCreateRoom();
 
   const createRoomForm = useForm<CreateRoomFormData>({
@@ -40,7 +42,7 @@ export function CreateRoomForm() {
   });
 
   async function handleCreateRoom({ name, description }: CreateRoomFormData) {
-    await createRoom({ name, description });
+    await createRoom({ name, description, userId });
 
     createRoomForm.reset();
   }

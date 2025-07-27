@@ -32,9 +32,10 @@ type CreateQuestionFormData = z.infer<typeof createQuestionSchema>;
 
 interface QuestionFormProps {
   roomId: string;
+  userId: string;
 }
 
-export function QuestionForm({ roomId }: QuestionFormProps) {
+export function QuestionForm({ roomId, userId }: QuestionFormProps) {
   const { mutateAsync: createQuestion } = useCreateQuestion(roomId);
 
   const createQuestionForm = useForm<CreateQuestionFormData>({
@@ -45,7 +46,7 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
   });
 
   async function handleCreateQuestion({ question }: CreateQuestionFormData) {
-    await createQuestion({ question });
+    await createQuestion({ question, userId });
 
     createQuestionForm.reset();
   }

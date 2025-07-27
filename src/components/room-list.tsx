@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import type { sharedState } from '@/http/types/shared-state';
 import { useRooms } from '@/http/use-rooms';
 import { dayjs } from '@/lib/dayjs';
 import { Badge } from './ui/badge';
@@ -11,7 +12,7 @@ import {
   CardTitle,
 } from './ui/card';
 
-export function RoomList() {
+export function RoomList({ userId }: sharedState) {
   const { data, isLoading } = useRooms();
 
   return (
@@ -32,6 +33,7 @@ export function RoomList() {
             <Link
               className="flex items-center justify-between rounded-lg border p-3 hover:bg-accent/50"
               key={room.id}
+              state={{ userId }}
               to={`/room/${room.id}`}
             >
               <div className="flex flex-1 flex-col gap-1">

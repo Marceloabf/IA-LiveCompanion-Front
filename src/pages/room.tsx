@@ -1,5 +1,5 @@
 import { ArrowLeft, Radio } from 'lucide-react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { QuestionForm } from '@/components/question-form';
 import { QuestionList } from '@/components/question-list';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,9 @@ type RoomParams = {
 };
 
 export function Room() {
+  const location = useLocation();
+  const userId = location.state?.userId;
+
   const params = useParams<RoomParams>();
 
   if (!params.roomId) {
@@ -42,7 +45,7 @@ export function Room() {
         </div>
 
         <div className="mb-8">
-          <QuestionForm roomId={params.roomId} />
+          <QuestionForm roomId={params.roomId} userId={userId} />
         </div>
 
         <QuestionList roomId={params.roomId} />
