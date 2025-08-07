@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -150,7 +151,11 @@ export default function RegisterForm() {
               />
 
               <Button className="w-full" type="submit">
-                {isLoading ? 'Registrando..' : 'Registrar'}
+                {isLoading ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  'Registrar'
+                )}
               </Button>
 
               <p className="mt-4 text-center text-muted-foreground text-sm">
