@@ -7,6 +7,7 @@ import { Home } from './pages/home';
 import LoginForm from './pages/login';
 import RegisterForm from './pages/register';
 import { Room } from './pages/room';
+import { UploadAudio } from './pages/upload-audio';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ export function App() {
           <Route element={<CreateRoom />} path="/create-room" />
           <Route element={<Room />} path="/room/:roomId" />
           <Route element={<CreateAudio />} path="/room/:roomId/audio" />
+          <Route element={<UploadAudio />} path="/room/:roomId/upload-audio" />
         </Routes>
         <Toaster richColors />
       </BrowserRouter>

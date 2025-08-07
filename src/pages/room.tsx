@@ -1,4 +1,4 @@
-import { ArrowLeft, Radio } from 'lucide-react';
+import { ArrowLeft, Radio, Upload } from 'lucide-react';
 import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { QuestionForm } from '@/components/question-form';
 import { QuestionList } from '@/components/question-list';
@@ -29,12 +29,20 @@ export function Room() {
                 Voltar
               </Button>
             </Link>
-            <Link to={`/room/${params.roomId}/audio`}>
-              <Button className="flex items-center gap-2" variant="secondary">
-                <Radio className="size-4" />
-                Gravar Áudio
-              </Button>
-            </Link>
+            <div className="audio-buttons-container flex gap-2">
+              <Link to={`/room/${params.roomId}/upload-audio`}>
+                <Button className="flex items-center gap-2" variant="secondary">
+                  <Upload className="size-4" />
+                  Upload de Áudio
+                </Button>
+              </Link>
+              <Link to={`/room/${params.roomId}/audio`}>
+                <Button className="flex items-center gap-2" variant="secondary">
+                  <Radio className="size-4" />
+                  Gravar Áudio
+                </Button>
+              </Link>
+            </div>
           </div>
           <h1 className="mb-2 font-bold text-3xl text-foreground">
             Sala de Perguntas
