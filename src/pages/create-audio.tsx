@@ -4,18 +4,14 @@ import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { AudioUploader } from '@/components/audio-uploader';
 import { Button } from '@/components/ui/button';
 import { RecordingVisualizer } from '@/components/ui/recording-visualizer';
+import type { RoomParams } from './types/room-params';
 
 const isRecordingSupported =
   !!navigator.mediaDevices &&
   typeof navigator.mediaDevices.getUserMedia === 'function' &&
   typeof window.MediaRecorder === 'function';
-
-type RoomParams = {
-  roomId: string;
-};
 
 export function CreateAudio() {
   const params = useParams<RoomParams>();
@@ -144,7 +140,6 @@ export function CreateAudio() {
       )}
       {isRecording ? <RecordingVisualizer /> : <p>Pausado</p>}
       <p className="text-green-500 text-lg">{formatTime(elapsedTime)}</p>
-      <AudioUploader />
       <Link className="flex gap-2 align-middle" to={`/room/${params.roomId}`}>
         <ArrowLeft /> Retornar
       </Link>
