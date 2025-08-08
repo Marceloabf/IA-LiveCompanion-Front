@@ -30,13 +30,16 @@ export function Room() {
               </Button>
             </Link>
             <div className="audio-buttons-container flex gap-2">
-              <Link to={`/room/${params.roomId}/upload-audio`}>
+              <Link
+                state={{ userId }}
+                to={`/room/${params.roomId}/upload-audio`}
+              >
                 <Button className="flex items-center gap-2" variant="secondary">
                   <Upload className="size-4" />
                   Upload de Áudio
                 </Button>
               </Link>
-              <Link to={`/room/${params.roomId}/audio`}>
+              <Link state={{ userId }} to={`/room/${params.roomId}/audio`}>
                 <Button className="flex items-center gap-2" variant="secondary">
                   <Radio className="size-4" />
                   Gravar Áudio

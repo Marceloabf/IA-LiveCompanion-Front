@@ -8,9 +8,10 @@ import { Label } from '@/components/ui/label';
 
 interface AudioUploaderProps {
   roomId: string;
+  userId: string;
 }
 
-export function AudioUploader({ roomId }: AudioUploaderProps) {
+export function AudioUploader({ roomId, userId }: AudioUploaderProps) {
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [audioURL, setAudioURL] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -36,6 +37,7 @@ export function AudioUploader({ roomId }: AudioUploaderProps) {
     try {
       const formData = new FormData();
       formData.append('file', audioFile, audioFile.name);
+      formData.append('userId', userId);
 
       const response = await fetch(
         `http://localhost:3333/rooms/${roomId}/audio`,
