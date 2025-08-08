@@ -38,6 +38,7 @@ export function CreateRoomForm({ userId }: sharedState) {
     defaultValues: {
       name: '',
       description: '',
+      userId,
     },
   });
 
