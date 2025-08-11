@@ -13,7 +13,7 @@ import {
 } from './ui/card';
 
 export function RoomList({ userId }: sharedState) {
-  const { data, isLoading } = useRooms();
+  const { data, isLoading } = useRooms(userId);
 
   return (
     <Card>
