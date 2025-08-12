@@ -142,8 +142,11 @@ export function CreateAudio() {
       )}
       {isRecording ? <RecordingVisualizer /> : <p>Pausado</p>}
       <p className="text-green-500 text-lg">{formatTime(elapsedTime)}</p>
-      <Link className="flex gap-2 align-middle" to={`/room/${params.roomId}`}>
-        <ArrowLeft /> Retornar
+      <Link state={{ userId }} to={`/room/${params.roomId}`}>
+        <Button variant="outline">
+          <ArrowLeft className="size-4" />
+          Voltar
+        </Button>
       </Link>
     </div>
   );

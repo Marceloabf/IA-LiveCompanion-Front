@@ -1,6 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { AudioUploader } from '@/components/audio-uploader';
+import { Button } from '@/components/ui/button';
 import type { RoomParams } from './types/room-params';
 
 export function UploadAudio() {
@@ -13,8 +14,11 @@ export function UploadAudio() {
       {params.roomId && (
         <AudioUploader roomId={params.roomId} userId={userId} />
       )}
-      <Link className="flex gap-2 align-middle" to={`/room/${params.roomId}`}>
-        <ArrowLeft /> Retornar
+      <Link state={{ userId }} to={`/room/${params.roomId}`}>
+        <Button variant="outline">
+          <ArrowLeft className="size-4" />
+          Voltar
+        </Button>
       </Link>
     </div>
   );
