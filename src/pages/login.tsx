@@ -56,6 +56,7 @@ export default function LoginForm() {
         state: { token: data.token, name: data.name, userId: data.userId },
       });
     }
+    form.reset();
     setIsLoading(false);
   };
 
