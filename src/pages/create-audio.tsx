@@ -2,7 +2,7 @@
 
 import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { RecordingVisualizer } from '@/components/ui/recording-visualizer';
@@ -14,6 +14,8 @@ const isRecordingSupported =
   typeof window.MediaRecorder === 'function';
 
 export function CreateAudio() {
+  const location = useLocation();
+  const userId = location.state?.userId;
   const params = useParams<RoomParams>();
   const [isRecording, setIsRecording] = useState(false);
   const recorder = useRef<MediaRecorder | null>(null);
@@ -51,7 +53,7 @@ export function CreateAudio() {
       formData.append('file', audio, 'audio.webm');
 
       const response = await fetch(
-        `http://localhost:3333/rooms/${params.roomId}/audio`,
+        `http://localhost:3333/rooms/${params.roomId}/audio/${userId}`,
         {
           method: 'POST',
           body: formData,
