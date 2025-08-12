@@ -52,7 +52,7 @@ export function QuestionItem({ question }: QuestionItemProps) {
                   </div>
                 ) : (
                   <p className="whitespace-pre-line text-sm leading-relaxed">
-                    {question.answer}
+                    {question.answer ?? 'Nenhuma resposta gerada.'}
                   </p>
                 )}
               </div>
