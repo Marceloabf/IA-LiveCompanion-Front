@@ -23,6 +23,7 @@ const loginSchema = z.object({
 interface loginResponse {
   userId: string;
   name: string;
+  email: string;
   role: string;
   token: string;
 }
@@ -54,7 +55,7 @@ export default function LoginForm() {
     if (response.ok) {
       sessionStorage.setItem('token', data.token);
       navigate('/create-room', {
-        state: { userId: data.userId },
+        state: { userId: data.userId, name: data.name, email: data.email },
       });
     }
     form.reset();
