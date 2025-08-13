@@ -52,8 +52,9 @@ export default function LoginForm() {
 
     const data: loginResponse = await response.json();
     if (response.ok) {
+      sessionStorage.setItem('token', data.token);
       navigate('/create-room', {
-        state: { token: data.token, name: data.name, userId: data.userId },
+        state: { userId: data.userId },
       });
     }
     form.reset();

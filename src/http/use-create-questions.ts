@@ -8,12 +8,17 @@ export function useCreateQuestion(roomId: string) {
 
   return useMutation({
     mutationFn: async (data: CreateQuestionRequest) => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found");
+      }
       const response = await fetch(
         `http://localhost:3333/rooms/${roomId}/questions`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(data),
         }

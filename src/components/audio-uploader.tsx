@@ -37,13 +37,19 @@ export function AudioUploader({ roomId, userId }: AudioUploaderProps) {
     try {
       const formData = new FormData();
       formData.append('file', audioFile, audioFile.name);
-      formData.append('userId', userId);
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token not found');
+      }
 
       const response = await fetch(
-        `http://localhost:3333/rooms/${roomId}/audio`,
+        `http://localhost:3333/rooms/${roomId}/audio/${userId}`,
         {
           method: 'POST',
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
