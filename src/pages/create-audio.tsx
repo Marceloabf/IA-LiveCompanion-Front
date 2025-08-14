@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import { Sidebar } from '@/components/sidebar';
 import { Button } from '@/components/ui/button';
 import { RecordingVisualizer } from '@/components/ui/recording-visualizer';
 import type { RoomParams } from './types/room-params';
@@ -134,20 +135,34 @@ export function CreateAudio() {
   }
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-3">
-      {isRecording ? (
-        <Button onClick={stopRecording}>Pausar gravação</Button>
-      ) : (
-        <Button onClick={startRecording}>Gravar áudio</Button>
-      )}
-      {isRecording ? <RecordingVisualizer /> : <p>Pausado</p>}
-      <p className="text-green-500 text-lg">{formatTime(elapsedTime)}</p>
-      <Link state={{ userId }} to={`/room/${params.roomId}`}>
-        <Button variant="outline">
-          <ArrowLeft className="size-4" />
-          Voltar
-        </Button>
-      </Link>
+    <div className="container flex h-screen justify-between">
+      <Sidebar
+        userEmail={location.state?.userEmail}
+        userId={userId}
+        userName={location.state?.userName}
+      />
+      <div className="flex w-full flex-col items-center justify-center gap-4">
+        {isRecording ? (
+          <Button onClick={stopRecording}>Pausar gravação</Button>
+        ) : (
+          <Button onClick={startRecording}>Gravar áudio</Button>
+        )}
+        {isRecording ? <RecordingVisualizer /> : <p>Pausado</p>}
+        <p className="text-green-500 text-lg">{formatTime(elapsedTime)}</p>
+        <Link
+          state={{
+            userId,
+            userName: location.state?.userName,
+            userEmail: location.state?.userEmail,
+          }}
+          to={`/room/${params.roomId}`}
+        >
+          <Button variant="outline">
+            <ArrowLeft className="size-4" />
+            Voltar
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

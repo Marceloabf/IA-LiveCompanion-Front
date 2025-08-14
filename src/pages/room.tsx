@@ -2,6 +2,7 @@ import { ArrowLeft, Radio, Upload } from 'lucide-react';
 import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { QuestionForm } from '@/components/question-form';
 import { QuestionList } from '@/components/question-list';
+import { Sidebar } from '@/components/sidebar';
 import { Button } from '@/components/ui/button';
 
 type RoomParams = {
@@ -19,11 +20,23 @@ export function Room() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="container flex min-h-screen bg-zinc-950">
+      <Sidebar
+        userEmail={location.state?.userEmail}
+        userId={userId}
+        userName={location.state?.userName}
+      />
       <div className="container mx-auto max-w-4xl px-4 py-8">
         <div className="mb-8">
           <div className="mb-4 flex items-center justify-between">
-            <Link state={{ userId }} to="/create-room">
+            <Link
+              state={{
+                userId,
+                userName: location.state?.userName,
+                userEmail: location.state?.userEmail,
+              }}
+              to="/create-room"
+            >
               <Button variant="outline">
                 <ArrowLeft className="size-4" />
                 Voltar
@@ -31,7 +44,11 @@ export function Room() {
             </Link>
             <div className="audio-buttons-container flex gap-2">
               <Link
-                state={{ userId }}
+                state={{
+                  userId,
+                  userName: location.state?.userName,
+                  userEmail: location.state?.userEmail,
+                }}
                 to={`/room/${params.roomId}/upload-audio`}
               >
                 <Button className="flex items-center gap-2" variant="secondary">
@@ -39,7 +56,14 @@ export function Room() {
                   Upload de Áudio
                 </Button>
               </Link>
-              <Link state={{ userId }} to={`/room/${params.roomId}/audio`}>
+              <Link
+                state={{
+                  userId,
+                  userName: location.state?.userName,
+                  userEmail: location.state?.userEmail,
+                }}
+                to={`/room/${params.roomId}/audio`}
+              >
                 <Button className="flex items-center gap-2" variant="secondary">
                   <Radio className="size-4" />
                   Gravar Áudio
