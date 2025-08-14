@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from './ui/card';
 
-export function RoomList({ userId }: sharedState) {
+export function RoomList({ userId, userName, userEmail }: sharedState) {
   const { data, isLoading } = useRooms(userId);
 
   return (
@@ -33,7 +33,7 @@ export function RoomList({ userId }: sharedState) {
             <Link
               className="flex items-center justify-between rounded-lg border p-3 hover:bg-accent/50"
               key={room.id}
-              state={{ userId }}
+              state={{ userId, userName, userEmail }}
               to={`/room/${room.id}`}
             >
               <div className="flex flex-1 flex-col gap-1">

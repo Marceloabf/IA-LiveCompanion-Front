@@ -55,7 +55,11 @@ export default function LoginForm() {
     if (response.ok) {
       sessionStorage.setItem('token', data.token);
       navigate('/create-room', {
-        state: { userId: data.userId, name: data.name, email: data.email },
+        state: {
+          userId: data.userId,
+          userName: data.name,
+          userEmail: data.email,
+        },
       });
     }
     form.reset();

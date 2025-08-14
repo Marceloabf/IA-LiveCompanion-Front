@@ -30,7 +30,7 @@ const createRoomSchema = z.object({
 
 type CreateRoomFormData = z.infer<typeof createRoomSchema>;
 
-export function CreateRoomForm({ userId }: sharedState) {
+export function CreateRoomForm({ userId }: Partial<sharedState>) {
   const { mutateAsync: createRoom } = useCreateRoom();
 
   const createRoomForm = useForm<CreateRoomFormData>({
@@ -43,6 +43,9 @@ export function CreateRoomForm({ userId }: sharedState) {
   });
 
   async function handleCreateRoom({ name, description }: CreateRoomFormData) {
+    if (!userId) {
+      throw new Error('User ID is required to create a room');
+    }
     await createRoom({ name, description, userId });
 
     createRoomForm.reset();

@@ -49,7 +49,7 @@ export function Sidebar({ userName, userEmail, userId }: sharedState) {
 
       <Separator />
 
-      {/* Conteúdo */}
+      {/* Content */}
       <div className="flex flex-1 flex-col justify-between">
         <ScrollArea>
           <nav className="flex flex-col gap-1 p-4">
